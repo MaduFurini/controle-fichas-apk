@@ -66,7 +66,7 @@ fun LoadingScreen(onTimeout: () -> Unit) {
                 modifier = Modifier.size(61.dp)
             )
 
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(120.dp))
 
             Text(
                 text = "Desenvolvido com carinho pelos estudantes de engenharia de software - UNIFAE",

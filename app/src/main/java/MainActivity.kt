@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sacramentum.apk.com.sacramentum.apk.view.caixa.InitialChange
 import com.sacramentum.apk.com.sacramentum.apk.view.loginPanel.EquipmentSettingsScreen
 import com.sacramentum.apk.com.sacramentum.apk.view.loginPanel.LoginScreen
 import com.sacramentum.apk.view.loginPanel.LoadingScreen
@@ -35,7 +36,10 @@ fun AppNavigation() {
             EquipmentSettingsScreen(onConfigure = { navController.navigate("login") })
         }
         composable("login") {
-            LoginScreen(onConfigure = { navController.navigate("management") })
+            LoginScreen(onConfigure = { navController.navigate("initialChange") })
+        }
+        composable("initialChange") {
+            InitialChange(onConfigure = { navController.navigate("management") })
         }
     }
 }

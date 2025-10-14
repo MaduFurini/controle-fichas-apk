@@ -72,7 +72,7 @@ fun LoginScreen(onConfigure: () -> Unit) {
         Card(
             modifier = Modifier
                 .width(460.dp)
-                .fillMaxHeight(0.7f)
+                .fillMaxHeight(0.8f)
                 .shadow(8.dp, RoundedCornerShape(8.dp)),
             shape = RoundedCornerShape(
                 topStart = 8.dp,

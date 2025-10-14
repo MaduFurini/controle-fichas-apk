@@ -73,12 +73,10 @@ fun CustomInputField (
                                 val result = newCode.concatToString().trim()
                                 onCodeChange(result)
 
-                                // Move para o próximo campo se digitou algo
                                 if (newChar.isNotEmpty() && index < 5) {
                                     focusRequesters[index + 1].requestFocus()
                                 }
                             } else if (newChar.isEmpty()) {
-                                // Backspace - limpa o campo atual e volta pro anterior
                                 val newCode = codeChars.toCharArray()
                                 newCode[index] = ' '
                                 onCodeChange(newCode.concatToString().trim())
@@ -94,6 +92,12 @@ fun CustomInputField (
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.Characters,
                             keyboardType = KeyboardType.Text
+                        ),
+                        textStyle = LocalTextStyle.current.copy(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = DarkBrown,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         ),
                         singleLine = true,
                         decorationBox = { innerTextField ->

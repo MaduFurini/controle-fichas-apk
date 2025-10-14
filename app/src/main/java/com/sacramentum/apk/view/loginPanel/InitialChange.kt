@@ -1,9 +1,10 @@
-package com.sacramentum.apk.com.sacramentum.apk.view.loginPanel
+package com.sacramentum.apk.com.sacramentum.apk.view.caixa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,23 +14,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sacramentum.apk.R
-import com.sacramentum.apk.com.sacramentum.apk.view.components.CustomInputField
+import com.sacramentum.apk.com.sacramentum.apk.utils.PriceMask
+import com.sacramentum.apk.com.sacramentum.apk.utils.rememberPriceFieldState
 import com.sacramentum.apk.ui.theme.DarkBrown
 import com.sacramentum.apk.ui.theme.LightBrownBackground
 import com.sacramentum.apk.ui.theme.MainBackround
 import com.sacramentum.apk.ui.theme.Typography
 
 @Composable
-fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
-    var communityCode by remember { mutableStateOf("") }
-    var eventCode by remember { mutableStateOf("") }
-
-    var communityCodeError by remember { mutableStateOf(false) }
-    var eventCodeError by remember { mutableStateOf(false) }
+fun InitialChange(onConfigure: (Double) -> Unit) {
+    // Usando o PriceFieldState para gerenciar o estado com máscara
+    val priceState = rememberPriceFieldState()
+    var showError by remember { mutableStateOf(false) }
 
     Column (
         modifier = Modifier
@@ -101,23 +102,56 @@ fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
                             .fillMaxWidth()
                             .padding(horizontal = 40.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(24.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        // Código da Comunidade
-                        CustomInputField(
-                            text = "Código da Comunidade",
-                            code = communityCode,
-                            onCodeChange = {
-                                communityCode = it
-                                communityCodeError = false
+                        // Campo de valor do troco com PriceMask
+                        OutlinedTextField(
+                            value = priceState.text,
+                            onValueChange = {
+                                priceState.updateValue(it)
+                                showError = false
                             },
-                            isError = communityCodeError,
-                            modifier = Modifier.fillMaxWidth()
+                            label = {
+                                Text(
+                                    "Valor do Troco Inicial",
+                                    fontFamily = Typography.bodyMedium.fontFamily
+                                )
+                            },
+                            placeholder = { Text("0,00") },
+                            leadingIcon = {
+                                Text(
+                                    "R$",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = DarkBrown
+                                )
+                            },
+                            visualTransformation = PriceMask(),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.NumberPassword
+                            ),
+                            isError = showError,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = DarkBrown,
+                                unfocusedBorderColor = DarkBrown.copy(alpha = 0.5f),
+                                focusedLabelColor = DarkBrown,
+                                unfocusedLabelColor = DarkBrown.copy(alpha = 0.7f),
+                                cursorColor = DarkBrown,
+                                errorBorderColor = Color(0xFFD32F2F),
+                                errorLabelColor = Color(0xFFD32F2F)
+                            ),
+                            textStyle = LocalTextStyle.current.copy(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Medium,
+                                fontFamily = Typography.bodyLarge.fontFamily
+                            )
                         )
 
-                        if (communityCodeError) {
+                        if (showError) {
                             Text(
-                                text = "⚠ Informe o código completo da comunidade (6 caracteres)",
+                                text = "⚠ Informe um valor válido para o troco inicial",
                                 color = Color(0xFFD32F2F),
                                 fontSize = 13.sp,
                                 modifier = Modifier
@@ -126,27 +160,38 @@ fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
                             )
                         }
 
-                        // Código do Evento
-                        CustomInputField(
-                            text = "Código do Evento",
-                            code = eventCode,
-                            onCodeChange = {
-                                eventCode = it
-                                eventCodeError = false
-                            },
-                            isError = eventCodeError,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-
-                        if (eventCodeError) {
-                            Text(
-                                text = "⚠ Informe o código completo do evento (6 caracteres)",
-                                color = Color(0xFFD32F2F),
-                                fontSize = 13.sp,
+                        // Preview do valor formatado usando priceState
+                        if (priceState.value > 0) {
+                            Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start = 4.dp)
-                            )
+                                    .padding(top = 8.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = DarkBrown.copy(alpha = 0.1f)
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = "Troco Inicial",
+                                        fontSize = 14.sp,
+                                        color = DarkBrown.copy(alpha = 0.7f),
+                                        fontFamily = Typography.bodySmall.fontFamily
+                                    )
+                                    Text(
+                                        text = priceState.formattedValue,
+                                        fontSize = 32.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = DarkBrown,
+                                        fontFamily = Typography.titleLarge.fontFamily
+                                    )
+                                }
+                            }
                         }
                     }
 
@@ -154,11 +199,11 @@ fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
 
                     Button(
                         onClick = {
-                            communityCodeError = communityCode.length < 6
-                            eventCodeError = eventCode.length < 6
-
-                            if (!communityCodeError && !eventCodeError) {
-                                onConfigure()
+                            if (priceState.value <= 0) {
+                                showError = true
+                            } else {
+                                // Chama o callback com o valor em Double
+                                onConfigure(priceState.value)
                             }
                         },
                         modifier = Modifier
@@ -174,7 +219,7 @@ fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
                         )
                     ) {
                         Text(
-                            text = "Configurar",
+                            text = "Iniciar Caixa",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -191,6 +236,7 @@ fun EquipmentSettingsScreen(onConfigure: () -> Unit) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(8.dp)
         )
     }
 }
