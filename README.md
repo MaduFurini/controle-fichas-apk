@@ -1,4 +1,4 @@
-# 🎫 Controle de Fichas – Aplicativo Mobile (Sacramentum)
+# 🎫 Sacramentum - Gerenciador de Festividades - Aplicativo Mobile
 
 Aplicativo Android desenvolvido em **Kotlin** para o projeto **Sacramentum: Sistema de Controle de Fichas de Quermesse**.  
 O app auxilia voluntários e administradores na **venda de fichas** durante eventos comunitários, oferecendo agilidade e transparência na gestão de quermesses e festas religiosas.
