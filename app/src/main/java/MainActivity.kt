@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sacramentum.apk.com.sacramentum.apk.view.caixa.InitialChange
 import com.sacramentum.apk.com.sacramentum.apk.view.loginPanel.EquipmentSettingsScreen
 import com.sacramentum.apk.com.sacramentum.apk.view.loginPanel.LoginScreen
+import com.sacramentum.apk.com.sacramentum.apk.view.managementPanel.OrderScreen
 import com.sacramentum.apk.view.loginPanel.LoadingScreen
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            AppNavigation()
+            OrderScreen()
+//            AppNavigation()
         }
     }
 }

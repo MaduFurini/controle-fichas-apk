@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sacramentum.apk.R
-import com.sacramentum.apk.com.sacramentum.apk.view.components.CustomInputField
+import com.sacramentum.apk.com.sacramentum.apk.view.loginPanel.components.CustomInputField
 import com.sacramentum.apk.ui.theme.DarkBrown
 import com.sacramentum.apk.ui.theme.LightBrownBackground
 import com.sacramentum.apk.ui.theme.MainBackround
