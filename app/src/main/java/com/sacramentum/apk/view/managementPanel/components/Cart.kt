@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -43,7 +42,8 @@ fun Cart(
     totalPrice: Double,
     onIncrement: (Int) -> Unit,
     onDecrement: (Int) -> Unit,
-    onRemove: (Int) -> Unit
+    onRemove: (Int) -> Unit,
+    onNext: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -137,12 +137,21 @@ fun Cart(
                     .padding(10.dp, 1.dp),
                 enabled = cartItems.isNotEmpty()
             ) {
-                Text(
-                    "Próximo",
-                    color = if (cartItems.isNotEmpty()) Color.White else Color.White.copy(alpha = 0.5f),
-                    fontSize = 20.sp,
-                    fontFamily = Typography.titleSmall.fontFamily
-                )
+                TextButton(
+                    onClick = { onNext() },
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(5.dp))
+                        .background(DarkBrown)
+                        .padding(10.dp, 1.dp),
+                    enabled = cartItems.isNotEmpty()
+                ) {
+                    Text(
+                        "Próximo",
+                        color = if (cartItems.isNotEmpty()) Color.White else Color.White.copy(alpha = 0.5f),
+                        fontSize = 20.sp,
+                        fontFamily = Typography.titleSmall.fontFamily
+                    )
+                }
             }
         }
     }

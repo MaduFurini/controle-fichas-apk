@@ -24,7 +24,10 @@ import com.sacramentum.apk.ui.theme.LightBrownBackground
  * Tela Principal
  **/
 @Composable
-fun OrderScreen(viewModel: OrderViewModel = viewModel()) {
+fun OrderScreen(
+    viewModel: OrderViewModel = viewModel(),
+    onNavigateToSummary: () -> Unit
+) {
     Row (
         modifier = Modifier.fillMaxSize()
     ) {
@@ -65,7 +68,8 @@ fun OrderScreen(viewModel: OrderViewModel = viewModel()) {
             totalPrice = viewModel.totalPrice,
             onIncrement = { viewModel.incrementQuantity(it) },
             onDecrement = { viewModel.decrementQuantity(it) },
-            onRemove = { viewModel.removeFromCart(it) }
+            onRemove = { viewModel.removeFromCart(it) },
+            onNext = onNavigateToSummary
         )
     }
 }

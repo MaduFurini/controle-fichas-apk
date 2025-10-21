@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.sacramentum.apk.com.sacramentum.apk.model.CartItem
 import com.sacramentum.apk.com.sacramentum.apk.model.Product
+import kotlin.text.clear
 
 class OrderViewModel : ViewModel() {
     private val _cartItems = mutableStateListOf<CartItem>()
@@ -74,5 +75,12 @@ class OrderViewModel : ViewModel() {
      **/
     fun removeFromCart(productUUID: Int) {
         _cartItems.removeAll { it.product.uuid == productUUID }
+    }
+
+    /**
+    * Função para limpar o carrinho
+    **/
+    fun clearCart() {
+        _cartItems.clear()
     }
 }
