@@ -1,6 +1,7 @@
 package com.sacramentum.apk.com.sacramentum.apk.view.managementPanel.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,12 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sacramentum.apk.R
@@ -25,11 +23,19 @@ import com.sacramentum.apk.ui.theme.DarkBrown
 import com.sacramentum.apk.ui.theme.Typography
 
 @Composable
-fun Header(){
+fun Header(onLongPress: () -> Unit = {}) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(10.dp)
-    ){
+        modifier = Modifier
+            .padding(10.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = {
+                        onLongPress()
+                    }
+                )
+            }
+    ) {
         Image(
             painter = painterResource(id = R.drawable.logo_sacramentum),
             contentDescription = "Logo Sacramentum",

@@ -1,5 +1,6 @@
 package com.sacramentum.apk.com.sacramentum.apk.view.managementPanel
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -33,12 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sacramentum.apk.com.sacramentum.apk.model.CartItem
+import com.sacramentum.apk.com.sacramentum.apk.utils.PrinterUtils
 import com.sacramentum.apk.ui.theme.BrownBackground
 import com.sacramentum.apk.ui.theme.DarkBrown
 import com.sacramentum.apk.ui.theme.LightBrownBackground
@@ -346,18 +349,42 @@ fun SummaryScreen(
 
             // Footer com total e botão de confirmar
             Column {
+                val context = LocalContext.current
+
                 val isValid = selectedPayment != null &&
                         (selectedPayment != PaymentMethod.CASH ||
                                 (cashAmount.isNotEmpty() && (cashAmount.toDoubleOrNull() ?: 0.0) >= totalPrice))
 
                 TextButton(
                     onClick = {
-                        selectedPayment?.let {
-                            val amount = if (it == PaymentMethod.CASH && cashAmount.isNotEmpty()) {
+                        selectedPayment?.let { payment ->
+                            val amount = if (payment == PaymentMethod.CASH && cashAmount.isNotEmpty()) {
                                 cashAmount.toDoubleOrNull()
                             } else null
 
-                            onConfirm(it, observations, amount)
+                            val paymentString = when (payment) {
+                                PaymentMethod.CREDIT_CARD -> "Cartão de Crédito"
+                                PaymentMethod.DEBIT_CARD -> "Cartão de Débito"
+                                PaymentMethod.PIX -> "PIX"
+                                PaymentMethod.CASH -> "Dinheiro"
+                            }
+
+                            PrinterUtils.printReceipt(
+                                context = context,
+                                orderItems = cartItems,
+                                totalPrice = totalPrice,
+                                payment = paymentString,
+                                observations = observations,
+                                cashReceived = amount,
+                                change = amount?.let { it - totalPrice }
+                            )
+
+                            PrinterUtils.printProductTickets(
+                                context = context,
+                                orderItems = cartItems
+                            )
+
+                            onConfirm(payment, observations, amount)
                         }
                     },
                     modifier = Modifier

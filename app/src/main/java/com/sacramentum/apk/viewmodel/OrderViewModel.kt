@@ -4,7 +4,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.sacramentum.apk.com.sacramentum.apk.model.CartItem
 import com.sacramentum.apk.com.sacramentum.apk.model.Product
-import kotlin.text.clear
+import com.sacramentum.apk.com.sacramentum.apk.model.SoldItem
+import com.sacramentum.apk.com.sacramentum.apk.view.managementPanel.PaymentMethod
 
 class OrderViewModel : ViewModel() {
     private val _cartItems = mutableStateListOf<CartItem>()
@@ -82,5 +83,43 @@ class OrderViewModel : ViewModel() {
     **/
     fun clearCart() {
         _cartItems.clear()
+    }
+
+    // No seu OrderViewModel, adicione:
+
+    private val _salesHistory = mutableStateListOf<SoldItem>()
+    private var _totalSalesAmount = 0.0
+
+    fun completeSale(paymentMethod: PaymentMethod, observations: String, cashAmount: Double?) {
+        // Adiciona os itens do carrinho atual no histórico
+        _cartItems.forEach { cartItem ->
+            _salesHistory.add(
+                SoldItem(
+                    productName = cartItem.product.name,
+                    quantity = cartItem.quantity,
+                    unitPrice = cartItem.product.price,
+                    totalPrice = cartItem.product.price * cartItem.quantity
+                )
+            )
+        }
+
+        // Atualiza o total de vendas
+        _totalSalesAmount += totalPrice
+
+        // Limpa o carrinho
+        _cartItems.clear()
+    }
+
+    fun getSoldItemsHistory(): List<SoldItem> {
+        return _salesHistory.toList()
+    }
+
+    fun getTotalSales(): Double {
+        return _totalSalesAmount
+    }
+
+    fun clearSalesHistory() {
+        _salesHistory.clear()
+        _totalSalesAmount = 0.0
     }
 }

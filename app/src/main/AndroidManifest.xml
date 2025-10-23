@@ -12,21 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sacramentum">
 
-        <!-- LoginActivity -->
-        <activity
-            android:name=".view.loginPanel.LoadingActivity"
-            android:exported="true">
-            <!-- Se quiser que seja a primeira tela do app -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"
+        tools:ignore="ManifestOrder" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 </manifest>

@@ -61,4 +61,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation("androidx.navigation:navigation-compose:2.9.5")
+    implementation("com.sunmi:printerlibrary:1.0.18")
 }
