@@ -49,45 +49,59 @@ object PrinterUtils {
         }
 
         try {
+            val dateFormat = java.text.SimpleDateFormat("HH:mm:ss dd/MM/yyyy", java.util.Locale.getDefault())
             Log.d("PrinterUtils", "=== INICIANDO IMPRESSÃO DE FICHAS ===")
-            Log.d("PrinterUtils", "Total de itens: ${orderItems.size}")
 
             for (item in orderItems) {
                 val name = item.product.name.uppercase()
                 val quantity = item.quantity
 
-                Log.d("PrinterUtils", "Imprimindo: $name | Qtd: $quantity")
-
                 for (i in 1..quantity) {
-                    Log.d("PrinterUtils", "  -> Imprimindo ficha $i de $quantity")
+                    val hora = dateFormat.format(java.util.Date())
 
-                    // Cabeçalho
-                    sunmiPrinterService?.printText("-----------------------------\n", null)
-                    sunmiPrinterService?.printText("      FICHA DE PRODUTO\n", null)
-                    sunmiPrinterService?.printText("-----------------------------\n\n", null)
-
-                    // Nome do produto
+                    // ✅ Centraliza todos os elementos
                     sunmiPrinterService?.setAlignment(1, null)
-                    sunmiPrinterService?.printText("🧾 $name\n", null)
-                    sunmiPrinterService?.printText("Ficha nº $i de $quantity\n\n", null)
 
-                    // Rodapé
-                    sunmiPrinterService?.printText("-----------------------------\n", null)
-                    sunmiPrinterService?.printText("Data:\n", null)
-                    sunmiPrinterService?.printText("SACRAMENTUM BAR\n\n\n\n", null)
+                    // ✅ LOGO centralizada
+                    try {
+                        val resId = context.resources.getIdentifier("logo_sacramentum", "drawable", context.packageName)
+                        if (resId != 0) {
+                            val bmp = android.graphics.BitmapFactory.decodeResource(context.resources, resId)
+                            sunmiPrinterService?.printBitmap(bmp, null)
+                            sunmiPrinterService?.lineWrap(1, null)
+                        }
+                    } catch (e: Exception) {
+                        Log.w("PrinterUtils", "Logo não encontrada ou falha ao imprimir: ${e.message}")
+                    }
 
+                    // ✅ Nome “SACRAMENTUM” centralizado logo abaixo
+                    sunmiPrinterService?.setFontSize(28f, null)
+                    sunmiPrinterService?.printText("SACRAMENTUM\n\n", null)
+
+                    // ✅ Nome do produto (maior destaque)
+                    sunmiPrinterService?.setFontSize(36f, null)
+                    sunmiPrinterService?.printText("$name\n\n", null)
+
+                    // ✅ Hora da impressão
+                    sunmiPrinterService?.setFontSize(22f, null)
+                    sunmiPrinterService?.printText("Impresso às: $hora\n\n", null)
+
+                    // ✅ Título “FICHA DE PRODUTO” centralizado
+                    sunmiPrinterService?.setFontSize(24f, null)
+                    sunmiPrinterService?.printText("FICHA DE PRODUTO\n\n\n", null)
+
+                    // Espaçamento entre fichas
                     sunmiPrinterService?.lineWrap(3, null)
 
-                    Log.d("PrinterUtils", "  -> Ficha $i enviada!")
+                    Log.d("PrinterUtils", "Ficha impressa: $name ($i de $quantity)")
                 }
             }
 
-            Log.d("PrinterUtils", "=== IMPRESSÃO CONCLUÍDA ===")
             Toast.makeText(context, "Fichas enviadas para impressão!", Toast.LENGTH_SHORT).show()
+            Log.d("PrinterUtils", "=== IMPRESSÃO CONCLUÍDA ===")
 
         } catch (e: Exception) {
-            Log.e("PrinterUtils", "ERRO ao imprimir: ${e.message}", e)
-            e.printStackTrace()
+            Log.e("PrinterUtils", "Erro ao imprimir fichas: ${e.message}", e)
             Toast.makeText(context, "Erro ao imprimir fichas: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }

@@ -25,6 +25,13 @@
             super.onCreate(savedInstanceState)
             enableEdgeToEdge()
 
+            window.decorView.apply {
+                systemUiVisibility =
+                    android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                            android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+            }
+
             setContent {
                 AppNavigation()
             }
@@ -42,7 +49,7 @@
         val userRole = "Operador de Caixa"
         val initialCashAmount = 100.0
 
-        NavHost(navController = navController, startDestination = "processingSale") {
+        NavHost(navController = navController, startDestination = "management") {
             composable("loading") {
                 LoadingScreen(onTimeout = { navController.navigate("equipment") })
             }

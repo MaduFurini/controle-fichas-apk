@@ -369,16 +369,6 @@ fun SummaryScreen(
                                 PaymentMethod.CASH -> "Dinheiro"
                             }
 
-                            PrinterUtils.printReceipt(
-                                context = context,
-                                orderItems = cartItems,
-                                totalPrice = totalPrice,
-                                payment = paymentString,
-                                observations = observations,
-                                cashReceived = amount,
-                                change = amount?.let { it - totalPrice }
-                            )
-
                             PrinterUtils.printProductTickets(
                                 context = context,
                                 orderItems = cartItems
