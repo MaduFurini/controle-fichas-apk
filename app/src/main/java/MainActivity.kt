@@ -43,13 +43,11 @@
     fun AppNavigation() {
         val navController = rememberNavController()
 
-        // Dados do usuário - você deve pegar isso do seu sistema de login
-        // Por enquanto, valores de exemplo
         val userName = "João Silva"
         val userRole = "Operador de Caixa"
         val initialCashAmount = 100.0
 
-        NavHost(navController = navController, startDestination = "management") {
+        NavHost(navController = navController, startDestination = "loading") {
             composable("loading") {
                 LoadingScreen(onTimeout = { navController.navigate("equipment") })
             }

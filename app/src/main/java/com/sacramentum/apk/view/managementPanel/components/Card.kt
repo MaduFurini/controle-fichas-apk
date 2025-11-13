@@ -75,7 +75,6 @@ fun ProductCard(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Start
             ) {
-                // Círculo
                 Box(
                     modifier = Modifier
                         .size(110.dp)
@@ -118,7 +117,6 @@ fun ProductCard(
                         )
                     }
 
-                    // Botão de adicionar
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(5.dp))

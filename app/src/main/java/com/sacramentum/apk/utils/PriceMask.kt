@@ -83,11 +83,9 @@ class PriceFieldState(initialValue: Double = 0.0) {
     })
         private set
 
-    // Valor em Double (R$)
     val value: Double
         get() = _valueInCents / 100.0
 
-    // Texto formatado para exibição (R$ 1.234,56)
     val formattedValue: String
         get() = if (_valueInCents == 0L) "R$ 0,00" else formatToPriceString(value)
 

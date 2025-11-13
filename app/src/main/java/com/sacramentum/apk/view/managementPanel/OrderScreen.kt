@@ -47,10 +47,8 @@ fun OrderScreen(
                     .weight(1f)
                     .background(LightBrownBackground)
             ) {
-                // Header com detecção de toque longo
                 Header(onLongPress = { showLogoutScreen = true })
 
-                // Cards
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     contentPadding = PaddingValues(

@@ -44,7 +44,6 @@ fun LogoutScreen(
     var isPrinting by remember { mutableStateOf(false) }
     var printCompleted by remember { mutableStateOf(false) }
 
-    // 🔹 Unifica produtos iguais antes de exibir
     val mergedSoldItems = remember(soldItems) { mergeSoldItems(soldItems) }
 
     Box(
@@ -61,7 +60,6 @@ fun LogoutScreen(
                 .clip(RoundedCornerShape(16.dp))
                 .background(LightBrownBackground)
         ) {
-            // Header
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -90,7 +88,6 @@ fun LogoutScreen(
                         )
                     }
 
-                    // Info do usuário
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -128,13 +125,11 @@ fun LogoutScreen(
                 }
             }
 
-            // Conteúdo Principal
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .padding(30.dp)
             ) {
-                // Cards de Resumo Financeiro
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(20.dp)
@@ -199,7 +194,6 @@ fun LogoutScreen(
                 }
             }
 
-            // Footer com Botões
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -207,12 +201,10 @@ fun LogoutScreen(
                     .padding(30.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // Cancelar
                 TextButton(onClick = onCancel, modifier = Modifier.weight(1f).height(60.dp)) {
                     Text("Cancelar", color = DarkBrown, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
                 }
 
-                // Imprimir
                 TextButton(
                     onClick = {
                         isPrinting = true
@@ -262,7 +254,6 @@ fun LogoutScreen(
                     }
                 }
 
-                // Sair
                 TextButton(
                     onClick = { showConfirmDialog = true },
                     modifier = Modifier.weight(1f).height(60.dp)
@@ -281,7 +272,6 @@ fun LogoutScreen(
         }
     }
 
-    // Feedback visual
     LaunchedEffect(isPrinting) {
         if (isPrinting) {
             delay(3000)
@@ -367,7 +357,6 @@ fun SoldItemRow(item: SoldItem) {
     }
 }
 
-// 🔹 Une produtos repetidos (ex: 2 vendas do mesmo produto)
 fun mergeSoldItems(items: List<SoldItem>): List<SoldItem> {
     val merged = mutableListOf<SoldItem>()
     for (item in items) {

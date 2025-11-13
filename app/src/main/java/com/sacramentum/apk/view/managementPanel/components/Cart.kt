@@ -73,7 +73,6 @@ fun Cart(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            // Container de items com scroll
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(11.dp))
@@ -111,7 +110,6 @@ fun Cart(
             }
         }
 
-        // Footer com total e botão
         Row(
             modifier = Modifier
                 .background(BrownBackground)
@@ -168,7 +166,6 @@ fun CartItemView(
             .fillMaxWidth()
             .height(80.dp)
     ) {
-        // Circle
         Box(
             modifier = Modifier
                 .size(80.dp)

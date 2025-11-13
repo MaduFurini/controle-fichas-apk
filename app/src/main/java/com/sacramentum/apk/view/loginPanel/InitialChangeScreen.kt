@@ -28,7 +28,6 @@ import com.sacramentum.apk.ui.theme.Typography
 
 @Composable
 fun InitialChange(onConfigure: (Double) -> Unit) {
-    // Usando o PriceFieldState para gerenciar o estado com máscara
     val priceState = rememberPriceFieldState()
     var showError by remember { mutableStateOf(false) }
 
@@ -104,7 +103,6 @@ fun InitialChange(onConfigure: (Double) -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        // Campo de valor do troco com PriceMask
                         OutlinedTextField(
                             value = priceState.text,
                             onValueChange = {
@@ -160,7 +158,6 @@ fun InitialChange(onConfigure: (Double) -> Unit) {
                             )
                         }
 
-                        // Preview do valor formatado usando priceState
                         if (priceState.value > 0) {
                             Card(
                                 modifier = Modifier
@@ -202,7 +199,6 @@ fun InitialChange(onConfigure: (Double) -> Unit) {
                             if (priceState.value <= 0) {
                                 showError = true
                             } else {
-                                // Chama o callback com o valor em Double
                                 onConfigure(priceState.value)
                             }
                         },

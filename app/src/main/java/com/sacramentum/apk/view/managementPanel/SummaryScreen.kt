@@ -82,7 +82,6 @@ fun SummaryScreen(
                 .weight(1f)
                 .background(LightBrownBackground)
         ) {
-            // Header
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -407,7 +406,6 @@ fun OrderSummaryItem(cartItem: CartItem) {
             .padding(15.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Circle placeholder
         Box(
             modifier = Modifier
                 .size(60.dp)

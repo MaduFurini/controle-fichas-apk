@@ -126,7 +126,6 @@ fun LoginScreen(onConfigure: () -> Unit) {
                     modifier = Modifier.padding(top = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Email
                     OutlinedTextField(
                         value = email,
                         onValueChange = {
@@ -239,7 +238,6 @@ fun LoginScreen(onConfigure: () -> Unit) {
                     }
                 }
 
-                // Botão
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
